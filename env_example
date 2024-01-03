@@ -1,0 +1,25 @@
+SECRET_KEY= '###################'
+DEBUG= '##############'
+
+CATEGORY=["#############","############"]
+NEWSAPI_SECRET= '########################'
+
+NY_CATEGORY= ['########################','##################']
+NYTIMES_KEY= '#####################'
+
+CONNECTION= '################'
+INDEX = '###############'
+
+
+HOST_EMAIL_ID= '#######################'
+HOST_EMAIL_PASSWORD= '################'
+
+
+GOOGLE_CLIENT_ID= '##########'
+GOOGLE_CLIENT_SECRET= '######################'
+
+FACEBOOK_CLIENT_ID= '##########################'
+FACEBOOK_CLIENT_SECRET= '###############'
+
+TWITTER_CLIENT_ID= '##############'
+TWITTER_CLIENT_SECRET= '################'

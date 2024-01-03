@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block content %}
+      <div class="mid-container" id="index_page">
+         <div class="container">
+            <div class="row">
+               <div class="col-12">
+                  <div class="heading_wrapper">
+                     <h2 class="mbot30 custom_h2 typewriter fsize"><span class="small_heading ">Trending Article</span></h2>
+                     <a href="{% url 'CategoryPage'%}?category=trending" class="view_all_btn"  data-aos="fade-up"  data-aos-delay="200"><span>View all</span></a>
+                  </div>
+                  <div class="full_width_col trending_article mbot50" id="first_half">
+                     
+                    {% for data in Trendingdata %} 
+                    {% if forloop.counter0 == 0 or forloop.counter0 == 4 or forloop.counter0 == 7 or forloop.counter0 == 10%}
+                    <div class="row">
+                    {% endif %}
+                            <div class="col-md-4 news_card_col" data-aos="fade-up"  data-aos-delay="200" id="trending{{forloop.counter0}}">
+                           <a href="{% url 'GetNewsDetails' %}?id={{data.news_id}}">
+                              <h5 class="fw-600 titlelinelimitation" data-aos="fade-right"  data-aos-delay="200" id="title{{data.news_id}}" >
+                                 {{data.title}}
+                              </h5>
+                              <p data-aos="fade-right"  data-aos-delay="200" class="descriptionlinelimitation" >
+                                {{data.description}}
+                              </p>
+                           </a>
+                           <div class="card_actions_col" data-aos="fade-right"  data-aos-delay="200">
+                              <ul>
+                                 <li class="smile-icon-wrap">
+                                 <a href="javascript:void(0)" id="reaction_tag{{data.news_id}}">
+                                 {% if data.reaction_type and data.reaction_type != 'NoData' %}
+                                    <i class="fa-regular fa-face-smile"></i> 
+                                    <i class="fa-regular {{data.reaction_type}} " onclick="delete_reaction('{{data.news_id}}')"></i> 
+                                 {%else%}
+                                       <i class="fa-regular fa-face-smile"></i>
+                                 {%endif%}
+                                 <span class="fw-500" id="reaction_count{{data.news_id}}">{{data.reaction_count}}</span>
+                              </a>
+                                    
+                                  
+                                 <div class="tooltip">
+                                    <i class="fa-regular fa-thumbs-up" onclick="send_reaction('fa-thumbs-up','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-heart" onclick="send_reaction('fa-heart','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-face-sad-cry" onclick="send_reaction('fa-face-sad-cry','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-face-laugh-wink" onclick="send_reaction('fa-face-laugh-wink','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-face-meh" onclick="send_reaction('fa-face-meh','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-face-frown" onclick="send_reaction('fa-face-frown','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-face-tired" onclick="send_reaction('fa-face-tired','{{data.news_id}}')"></i>
+                                 </div>                                  
+                                 </li>
+                                 
+                                 <li>
+                                    <a href="javascript:void(0)" class="comment-icon" onclick="toggleOverlay('{{data.news_id}}')">
+                                       <i class="fa-regular fa-comment"></i>
+                                       <span class="fw-500" id="comnt_count{{data.news_id}}">{{data.cmnt_count}}</span>
+                                    </a>
+                                 </li>
+                                 <li>
+                                    <a href="javascript:void(0)" class="copy-icon" onclick= "textcopied('{% url 'GetNewsDetails' %}?id={{data.news_id}}')" >
+                                       <i class="fa-regular fa-share-from-square"></i>
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                    {% if forloop.counter0 == 3 or forloop.counter0 == 6 or forloop.counter0 == 9 or forloop.counter0 == 15 %}
+                        </div>
+                    {% endif %}
+                    {%endfor%}
+                  </div>
+               </div>
+            </div>
+           <div class="row">
+               <div class="col-12">
+                  <div class="heading_wrapper">
+                     <h2 class="mbot30 custom_h2 typewriter fsize"><span class="small_heading ">Latest Article</span></h2>
+                     <a href="{% url 'CategoryPage'%}?category=All" class="view_all_btn"  data-aos="fade-up"  data-aos-delay="200"><span>View all</span></a>
+                  </div>
+                  <div class="full_width_col trending_article mbot50" id="Second_half">
+                     {% for data in Latestdata %} 
+                     {% if forloop.counter0 == 0 or forloop.counter0 == 3 or forloop.counter0 == 6 or forloop.counter0 == 9%}
+                    <div class="row">
+                    {% endif %}
+                        <div class="col-md-4 news_card_col" data-aos="fade-up"  data-aos-delay="200" id="latest{{forloop.counter}}">
+                           <a href="{% url 'GetNewsDetails' %}?id={{data.news_id}}">
+                              <h5 class="fw-600 titlelinelimitation" data-aos="fade-right"  data-aos-delay="200" id="title{{data.news_id}}">
+                                 {{data.title}}
+                              </h5>
+                              <p data-aos="fade-right"  data-aos-delay="200" class="descriptionlinelimitation">
+                                 {{data.description}}
+                              </p>
+                           </a>
+                           <div class="card_actions_col" data-aos="fade-right"  data-aos-delay="200">
+                              <ul>
+                                 <li class="smile-icon-wrap">
+                                    <a href="javascript:void(0)" id="reaction_tag{{data.news_id}}">
+                                       {% if data.reaction_type and data.reaction_type != 'NoData' %}
+                                          <i class="fa-regular fa-face-smile"></i> 
+                                          <i class="fa-regular {{data.reaction_type}} " onclick="delete_reaction('{{data.news_id}}')"></i> 
+                                       {%else%}
+                                             <i class="fa-regular fa-face-smile"></i>
+                                       {%endif%}
+                                       <span class="fw-500" id="reaction_count{{data.news_id}}">{{data.reaction_count}}</span>
+                                    </a>  
+                                 <div class="tooltip">
+                                    <i class="fa-regular fa-thumbs-up" onclick="send_reaction('fa-thumbs-up','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-heart" onclick="send_reaction('fa-heart','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-face-sad-cry" onclick="send_reaction('fa-face-sad-cry','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-face-laugh-wink" onclick="send_reaction('fa-face-laugh-wink','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-face-meh" onclick="send_reaction('fa-face-meh','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-face-frown" onclick="send_reaction('fa-face-frown','{{data.news_id}}')"></i>
+                                    <i class="fa-regular fa-face-tired" onclick="send_reaction('fa-face-tired','{{data.news_id}}')"></i>
+                                 </div>                                 
+                                 </li>
+                                 <li>
+                                    <a href="javascript:void(0)" class="comment-icon" onclick="toggleOverlay('{{data.news_id}}')">
+                                       <i class="fa-regular fa-comment"></i>
+                                       <span class="fw-500" id="comnt_count{{data.news_id}}">{{data.cmnt_count}}</span>
+                                    </a>
+                                 </li>
+                                 <li>
+                                    <a href="javascript:void(0)" class="copy-icon" onclick= "textcopied('{% url 'GetNewsDetails' %}?id={{data.news_id}}')" >
+                                       <i class="fa-regular fa-share-from-square"></i>
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     {% if forloop.counter0 == 2 or forloop.counter0 == 5 or forloop.counter0 == 8 or forloop.counter0 == 15 %}
+                     </div>
+                     {% endif %}
+                     {%endfor%}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-4 comment-bar" id="commentOverlay">
+         <h2 class="mbot30 custom_h2 typewriter fsize"><span class="small_heading ">COMMENTS</span></h2>
+         <div class="comment-box">
+            <h3 id="comnts_heading">Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum is simply dummy text of the</h3>
+         </div>
+         <div class="comments-wrap" id="main_comments_div">
+         </div>
+         <div class="comment_send_col">
+            <input type="hidden" id="comment_news_id">
+            <input placeholder="Write your comment here...." onchange="send_comment()" id="comment_input_value"/>
+            <input type="button" class="search_btn" />
+         </div>
+      </div>
+{% endblock %}
+
